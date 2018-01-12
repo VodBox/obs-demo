@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			#demoapp_obs-window {
+				width: 800px;
+				height: 668px;
+				display: block;
+				background-color: #3A3A3A;
+				position: relative;
+			}
+			
+			#demoapp_preview {
+				left: 7px;
+				top: 42px;
+				width: 786px;
+				height: 449px;
+				background-color: #4B4B4B;
+				position: absolute;
+			}
+			
+			#demoapp_main-preview {
+				left: 8px;
+				top: 8px;
+				width: 770px;
+				height: 434px;
+				background-color: #1F1F1F;
+				position: absolute;
+			}
+			
+			#demoapp_buttons {
+				top: 0px;
+				right: 0px;
+				width: 60px;
+				height: 11px;
+				position: absolute;
+			}
+			
+			.demoapp_button {
+				top: 8px;
+				margin-right: 9px;
+				width: 11px;
+				height: 11px;
+				border-radius: 100%;
+				background-color: #8A8A8A;
+				float: right;
+				display: block;
+				position: relative;
+			}
+			
+			#demoapp_icon {
+				top: 6px;
+				left: 6px;
+				height: 16px;
+				position: absolute;
+			}
+			
+			.demoapp_section {
+				position: relative;
+				width: 147px;
+				height: 146px;
+				background-color: #3A3A3A;
+			}
+			
+			.demoapp_border {
+				position: absolute;
+				top: 505px;
+				padding: 2px;
+				height: auto;
+				width: auto;
+				box-shadow: 0 0 0 rgba(0,0,0,0);
+				transition: transform 1s, box-shadow 0.5s;
+			}
+			
+			.demoapp_section img {
+				position: absolute;
+				top: -3px;
+				left: -1px;
+			}
+			
+			#demoapp_border-1 {
+				left: 6px;
+			}
+			
+			#demoapp_border-2 {
+				left: 160px;
+			}
+			
+			#demoapp_border-3 {
+				left: 315px;
+			}
+			
+			#demoapp_section-3 {
+				width: 239px;
+			}
+			
+			.demoapp_section-box {
+				width: 100%;
+				left: -1px;
+				height: 126px;
+				bottom: 0px;
+				position: absolute;
+				border: 1px solid #1F1F1F;
+			}
+			
+			.demoapp_inner-box {
+				width: 100%;
+				height: 102px;
+				background-color: #1F1F1F;
+			}
+			
+			#demoapp_obs-menu {
+				top: 0;
+				position: absolute;
+				width: 365px;
+			}
+			
+			.demoapp_box-button {
+				width: 12px;
+				height: 12px;
+				float: left;
+				left: 4px;
+				top: 6px;
+				margin-left: 2px;
+				background-color: #8A8A8A;
+				position: relative;
+				z-index: 10;
+			}
+			
+			.demoapp_mixer {
+				height: 2.5px;
+				width: 224px;
+				left: 7px;
+				background-color: #33C735;
+				position: absolute;
+			}
+			
+			#demoapp_mixerBar {
+				top: 33.5px;
+			}
+			
+			#demoapp_mixerL {
+				top: 68.8px;
+			}
+			#demoapp_mixerR {
+				top: 71.8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demoapp_obs-window">
+			<img src="JCRqYSv.jpg" style="display:none" />
+			<img id="demoapp_icon" src="OBSLogo.svg" />
+			<img id="demoapp_obs-menu" src="Header.svg" />
+			<div id="demoapp_buttons">
+				<div class="demoapp_button"></div>
+				<div class="demoapp_button"></div>
+				<div class="demoapp_button"></div>
+			</div>
+			<div id="demoapp_preview">
+				<div id="demoapp_main-preview"></div>
+			</div>
+			<div id="demoapp_border-1" class="demoapp_border">
+				<div id="demoapp_section-1" class="demoapp_section">
+					<div class="demoapp_section-box">
+						<div class="demoapp_inner-box"></div>
+						<div class="demoapp_box-button"></div>
+						<div class="demoapp_box-button"></div>
+						<div class="demoapp_box-button"></div>
+						<div class="demoapp_box-button"></div>
+					</div>
+					<img src="Section1.svg" />
+				</div>
+			</div>
+			<div id="demoapp_border-2" class="demoapp_border">
+				<div id="demoapp_section-2" class="demoapp_section">
+					<div class="demoapp_section-box">
+						<div class="demoapp_inner-box"></div>
+						<div class="demoapp_box-button"></div>
+						<div class="demoapp_box-button"></div>
+						<div class="demoapp_box-button"></div>
+						<div class="demoapp_box-button"></div>
+						<div class="demoapp_box-button"></div>
+					</div>
+					<img src="Section2.svg" />
+				</div>
+			</div>
+			<div id="demoapp_border-3" class="demoapp_border">
+				<div id="demoapp_section-3" class="demoapp_section">
+					<div class="demoapp_section-box">
+					</div>
+					<img src="Section3.svg" />
+					<div class="demoapp_mixer" id="demoapp_mixerBar"></div>
+					<div class="demoapp_mixer" id="demoapp_mixerL"></div>
+					<div class="demoapp_mixer" id="demoapp_mixerR"></div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var sec1 = document.getElementById("demoapp_section-1");
+			var sec2 = document.getElementById("demoapp_section-2");
+			var sec3 = document.getElementById("demoapp_section-3");
+			var sec4 = document.getElementById("demoapp_section-4");
+			var mixerBar = document.getElementById("demoapp_mixerBar");
+			var mixerBarL = document.getElementById("demoapp_mixerL");
+			var mixerBarR = document.getElementById("demoapp_mixerR");
+			
+			var mixM = createArray(0.9, 10);
+			var mixS = createArray(0.4, 40);
+			var mixL = createArray(0, 60);
+			var mixR = createArray(0, 60);
+			
+			function drawUpdate() {
+				mixerBar.style.width = Math.sqrt(updateArray(mixM, 0.3, 0.8)) * 224 + "px";
+				let base = Math.sqrt(updateArray(mixS, 0, 0.4));
+				mixerBarL.style.width = Math.max(Math.min(base + updateArray(mixL, -0.2, 0.2), 1), 0) * 224 + "px";
+				mixerBarR.style.width = Math.max(Math.min(base + updateArray(mixR, -0.2, 0.2), 1), 0) * 224 + "px";
+				window.requestAnimationFrame(drawUpdate);
+			}
+			
+			function updateArray(array, min, max) {
+				array.shift();
+				array.push(Math.random()*(max-min)+min);
+				let average = 0;
+				for(let i = 0, l = array.length; i < l; ++i) {
+					average += array[i] / l;
+				}
+				return average;
+			}
+			
+			function createArray(val, len) {
+				let array = [];
+				for(let i = 0; i < len; ++i) { array.push(val); }
+				return array;
+			}
+			
+			window.requestAnimationFrame(drawUpdate);
+		</script>
+	</body>
+</html>
