@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 		<style>
 			.demo_obs-window {
 				width: 800px;
@@ -10,68 +10,95 @@
 				display: block;
 				background-color: #3A3A3A;
 				position: relative;
+				cursor: default;
+				font-family: sans-serif;
 			}
-      
-      .demo_obs-window * {
-      	padding: 0px;
-        margin: 0px;
-        box-sizing: border-box;
-      }
-			
+
+			.on-windows * {
+				font-family: Segoe UI !important;
+			}
+
+			.demo_obs-window * {
+				padding: 0px;
+				margin: 0px;
+				box-sizing: border-box;
+			}
+
 			#demo_preview-container {
 				left: 10px;
-
-				top: 42px;
+				top: 44px;
 				width: calc(100% - 20px);
-        padding-top: calc(56.25% + 10px);
+				padding-top: calc(56.25% + 10px);
 				background-color: #4B4B4B;
 				position: absolute;
-        
-        transition: width .5s, padding-top 1s, box-shadow 0.5s;
-        
-        cursor: pointer;
+				transition: width .5s, padding-top 1s, box-shadow 0.5s;
+				cursor: pointer;
 			}
-      
-      .demo_preview {
-      	background-color: #1F1F1F;
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
+
+			.demo_preview {
+				background-color: #1F1F1F;
+				position: absolute;
+				left: 10px;
+				top: 50%;
+				transform: translateY(-50%);
 				width: calc(100% - 20px);
-        height: 0;
-        padding-top: 56.25%;
-        transition: opacity .5s ease-out, transform 0.5s;
-      }
-      
-      #demo_studio-preview {
-      	opacity: 0;
-        transform: translateY(-50%) translateX(0) scale(0.48);
-      }
-        
-      .studio-mode #demo_main-preview {
-        transform: translateY(-50%) translateX(26%) scale(0.48);
-      }
-      
-      .studio-mode #demo_studio-preview {
-      	opacity: 1;
-        transform: translateY(-50%) translateX(-26%) scale(0.48);
-      }
-      
-      .studio-mode.vertical #demo_studio-preview {
-        transform: translateY(-76%) translateX(0%) scale(0.48);
-      }
-      
-      .studio-mode.vertical #demo_main-preview {
-      	transform: translateY(-24%) translateX(0%) scale(0.48);
-      }
-     
+				height: 0;
+				padding-top: 56.25%;
+				transition: opacity .5s ease-out, transform 0.5s;
+				overflow: hidden;
+			}
+
+			.demo_preview * {
+				position: absolute;
+				transition: width 1s, height 1s, top 1s, left 1s;
+			}
+
+			.demo_source-border {
+				position: absolute;
+				border: 1px solid #FF0000;
+				width: 50%;
+				height: 50%;
+				top: 25%;
+				left: 25%;
+			}
+
+			.demo_border-circle {
+				position: absolute;
+				width: 9px;
+				height: 9px;
+				margin: -5px;
+				border-radius: 50%;
+				border: 1px solid #FF0000;
+			}
+
+			#demo_studio-preview {
+				opacity: 0;
+				transform: translateY(-50%) translateX(0) scale(0.48);
+			}
+
+			.studio-mode #demo_main-preview {
+				transform: translateY(-50%) translateX(26%) scale(0.48);
+			}
+
+			.studio-mode #demo_studio-preview {
+				opacity: 1;
+				transform: translateY(-50%) translateX(-26%) scale(0.48);
+			}
+
+			.studio-mode.vertical #demo_studio-preview {
+				transform: translateY(-76%) translateX(0%) scale(0.48);
+			}
+
+			.studio-mode.vertical #demo_main-preview {
+				transform: translateY(-24%) translateX(0%) scale(0.48);
+			}
+
 			#demo_buttons {
 				top: 0px;
 				right: 2px;
 				position: absolute;
 			}
-			
+
 			.demo_button {
 				top: 10px;
 				margin-right: 8px;
@@ -83,533 +110,1079 @@
 				display: block;
 				position: relative;
 			}
-      .on-windows .demo_button {
-      	top: 0;
-        margin-right: 2px;
-        width: 32px;
-        height: 20px;
-        border-radius: 0;
-        color: white;
-        background-color: transparent;
-        text-align: center;
-        line-height: 1em;
-      }
-      
-      .on-windows .demo_button:after { /* Maximise */
-      	content: '\25A1';
-        pointer: default;
-      }
-      .on-windows .demo_button:nth-of-type(1) {
-      	background: #E04343;
-      }
-      .on-windows .demo_button:nth-of-type(1):after { /* Close */
-      	content: '\2715';
-        font-size: 0.82em;
-      }
-      
-      .on-windows .demo_button:last-child:after { /* Minimise */
-      	content: '\2015';
-    		font-size: 0.6em;
-    		line-height: 2em;
-      }
-			
+			.on-windows .demo_button {
+				top: 0;
+				margin-right: 2px;
+				width: 32px;
+				height: 20px;
+				border-radius: 0;
+				color: white;
+				background-color: transparent;
+				text-align: center;
+				line-height: 1em;
+			}
+
+			.on-windows .demo_button:after { /* Maximise */
+				content: '\25A1';
+				pointer: default;
+			}
+			.on-windows .demo_button:nth-of-type(1) {
+				background: #E04343;
+			}
+			.on-windows .demo_button:nth-of-type(1):after { /* Close */
+				content: '\2715';
+				font-size: 0.82em;
+			}
+
+			.on-windows .demo_button:last-child:after { /* Minimise */
+				content: '\2015';
+				font-size: 0.6em;
+				line-height: 2em;
+			}
+
 			#demo_icon {
-				top: 6px;
+				top: 4px;
 				left: 6px;
 				height: 16px;
 				position: absolute;
 			}
-			
-			
+
+
 			.demo_border {
 				position: absolute;
-				top: 505px;
+				top: 507px;
 				padding: 2px;
 				height: auto;
 				width: auto;
 				box-shadow: 0 0 0 rgba(0,0,0,0);
-        background-color: #3A3A3A;
+				background-color: #3A3A3A;
 				transition: transform 1s, box-shadow 0.5s, height 1s, width 1s;
 			}
-      
-      .demo_window {
-      	box-shadow: 2px 2px 10px rgba(0,0,0,0.5) !important;
-        margin-top: -20px;
-        padding: 0;
-      }
-      
-      .demo_window .demo_section:before {
-      	content: "";
-        top: 0px;
-        height: 20px;
-        width: 100%;
-        display: block;
-        position: absolute;
-        background-color: #3A3A3A;
-      }
-      
-      .demo_window .demo_section:after {
+
+			.demo_window {
+				box-shadow: 2px 2px 10px rgba(0,0,0,0.5) !important;
+				margin-top: -20px;
+				padding: 0;
+			}
+
+			.demo_window .demo_section:before {
 				content: "";
-    		text-align: center;
-    		line-height: 20px;
-    		font-size: 10px;
-    		right: 0;
-    		top: 4px;
-    		margin-right: 6px;
-    		width: 11px;
-    		height: 11px;
-    		border-radius: 100%;
-    		background-color: #8A8A8A;
-    		float: right;
-    		display: block;
-    		position: relative;
-      }
-      
-      .on-windows .demo_window .demo_section:before {
-      	content: "";
-        top: 0px;
-        height: 20px;
-        width: 100%;
-        display: block;
-        position: absolute;
-      }
-      
-      .on-windows .demo_window .demo_section:after {
-      	content: "\2715";
-        text-align: center;
-        width: 20px;
-        height: 20px;
-        border-radius: 0;
-        margin-right: 0;
-        line-height: 20px;
-        font-size: 10px;
-        font-family: sans-serif;
-        color: #FFFFFF;
-        background-color: #E04343;
-        top: 0;
-        right: 0;
-        position: absolute;
-        pointer: default;
-      }
-      
-      .demo_window .demo_inner-box {
-      	border-left: solid 1px #3A3A3A;
-        margin-left: 1px;
-        width: calc(100% - 1px);
-      }
-      
-      .demo_window .demo_section-box {
-      	height: calc(100% - 20px);
-      }
-      
-      .demo_window img {
-      	left: 2px !important;
-        top: -1px !important;
-      }
-      
-      .demo_section {
-      	height: 100%;
-        background-color: #3A3A3A;
-        position: relative;
-      }
-			
+				top: 0px;
+				height: 20px;
+				width: 100%;
+				display: block;
+				position: absolute;
+				background-color: #3A3A3A;
+			}
+
+			.demo_window .demo_section:after {
+				content: "";
+				text-align: center;
+				line-height: 20px;
+				font-size: 0.6em;
+				right: 0;
+				left: 4px;
+				top: 5px;
+				margin-right: 6px;
+				width: 10px;
+				height: 10px;
+				border-radius: 100%;
+				background-color: #8A8A8A;
+				float: left;
+				display: block;
+				position: relative;
+			}
+
+			.on-windows .demo_window .demo_section:before {
+				content: "";
+				top: 0px;
+				height: 20px;
+				width: 100%;
+				display: block;
+				position: absolute;
+			}
+
+			.on-windows .demo_window .demo_section:after {
+				content: "\2715";
+				text-align: center;
+				width: 20px;
+				height: 20px;
+				border-radius: 0;
+				margin-right: 0;
+				line-height: 20px;
+				font-size: 0.6em;
+				font-family: sans-serif;
+				color: #FFFFFF;
+				background-color: #E04343;
+				top: 6px;
+				right: 0;
+				left: auto;
+				float: right;
+				position: absolute;
+				pointer: default;
+			}
+
+			.demo_window .demo_inner-box {
+				border-left: solid 1px #3A3A3A;
+				margin-left: 1px;
+				width: calc(100% - 1px);
+			}
+
+			.demo_window img {
+				left: 2px !important;
+				top: -1px !important;
+			}
+
+			.demo_section {
+				height: 100%;
+				background-color: #3A3A3A;
+				position: relative;
+			}
+
 			.demo_section img {
 				position: absolute;
 				top: -3px;
 				left: -1px;
 			}
-			
+
 			#demo_dock-1 {
 				left: 10px;
-        width: 147px;
+				width: 120px;
 				height: 146px;
 			}
-      
-      #demo_dock-1.demo_window {
-      	height: 166px;
-      }
-			
+
+			#demo_dock-1.demo_window {
+				height: 166px;
+			}
+
 			#demo_dock-2 {
-				left: 167px;
-        width: 147px;
+				left: 140px;
+				width: 147px;
 				height: 146px;
 			}
-      
-      #demo_dock-1 img, #demo_dock-2 img {
+
+			#demo_dock-1 img, #demo_dock-2 img {
 				width: 147px;
 			}
-			
+
 			#demo_dock-3 {
-				left: 324px;
-        width: 239px;
+				left: 297px;
+				width: 239px;
 				height: 146px;
 			}
-      
-      #demo_dock-3 img {
-      	width: 239px;
-      }
-			
+
+			#demo_dock-4 {
+				left: 550px;
+				width: 127px;
+				height: 146px;
+			}
+
+			#demo_dock-5 {
+				left: 687px;
+				width: 105px;
+				height: 146px;
+			}
+
+			#demo_dock-3 img {
+				width: 239px;
+			}
+
 			#demo_dock-3 .demo_section {
 				width: 239px;
 			}
-			
+
 			.demo_section-box {
 				width: 100%;
 				left: -1px;
-				height: calc(100% - 16px);
+				height: calc(100% - 24px);
 				bottom: 0px;
 				position: absolute;
 				border: 1px solid #1F1F1F;
 			}
-      
-      .demo_window .demo_section-box {
-      	border: 0 !important;
-      }
-			
+
+			.demo_gradient-box {
+				width: calc(100% + 8px);
+				height: 20px;
+				left: -5px;
+				top: 0;
+				position: absolute;
+				background: #555455;
+				background: -moz-linear-gradient(top, #555455 1%, #464546 100%);
+				background: -webkit-linear-gradient(top, #555455 1%,#464546 100%);
+				background: linear-gradient(to bottom, #555455 1%,#464546 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#555455', endColorstr='#464546',GradientType=0 );
+				color: #E1E1E1;
+				font-size: 12px;
+				line-height: 20px;
+				text-align: center;
+				font-family: sans-serif;
+			}
+
+			.demo_window .demo_section-box {
+				border: 0 !important;
+				height: calc(100% - 22px);
+			}
+
+			.on-windows .demo_window .demo_section-box {
+				height: calc(100% - 34px);
+			}
+
+			.on-windows .demo_window .demo_gradient-box {
+				width: 100%;
+				left: 0;
+				padding-left: 8px;
+				background: #FFFFFF !important;
+				height: 32px;
+				line-height: 32px;
+				text-align: left;
+				color: #000000;
+			}
+
+			.demo_window .demo_gradient-box {
+				width: 100%;
+				left: 0;
+				background: #F5F5F5 !important;
+				background: -moz-linear-gradient(top, #F5F5F5 1%, #D2D2D2 100%) !important;
+				background: -webkit-linear-gradient(top, #F5F5F5 1%,#D2D2D2 100%) !important;
+				background: linear-gradient(to bottom, #F5F5F5 1%,#D2D2D2 100%) !important;
+				text-align: center;
+				color: #000000;
+			}
+
 			.demo_inner-box {
 				width: 100%;
-				height: calc(100% - 24px);
+				height: calc(100% - 28px);
 				background-color: #1F1F1F;
+				overflow: hidden;
 			}
-			
+
+			.demo_box-select {
+				width: 100%;
+				height: 18px;
+				padding-left: 4px;
+				padding-top: 2px;
+				color: #E1E1E1;
+				font-size: 12px;
+				line-height: 13px;
+			}
+
+			.demo_box-select p {
+				float: left;
+			}
+
+			.demo_box-select img {
+				height: 100% !important;
+				width: auto !important;
+				position: relative;
+				margin-top: 2px;
+				float: left;
+				margin-right: 1px;
+			}
+
+			.demo_box-selected {
+				background: #302F30 !important;
+			}
+
+			.demo_box-select:hover {
+				background: #1C2936;
+			}
+
 			#demo_obs-menu {
 				top: 0;
 				position: absolute;
 				width: 365px;
 			}
-			
+
 			.demo_box-button {
-				width: 12px;
-				height: 12px;
+				width: 28px;
+				height: 28px;
 				float: left;
-				left: 4px;
-				top: 6px;
-				margin-left: 2px;
-				background-color: #8A8A8A;
+				left: 0px;
+				top: 0px;
+				margin-left: 0px;
 				position: relative;
 				z-index: 10;
+				color: #FFFFFF;
+				text-align: center;
 			}
-			
+
+			.demo_box-button:hover {
+				background-color: #7A797A;
+			}
+
+			.demo_box-button img {
+				height: 100%;
+				width: 100% !important;
+				top: 0 !important;
+				left: 0 !important;
+				padding: 6px;
+			}
+
 			.demo_mixerbar {
 				height: 2.5px;
 				width: 0px;
 				left: 7px;
+				top: 0;
 				background-color: #33C735;
 				position: absolute;
-        transition: width .06s linear;
-        overflow: hidden;
+				transition: width .06s linear;
+				overflow: hidden;
 			}
-      
-      .demo_mixer-green, .demo_mixer-yellow, .demo_mixer-red {
-      	height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-      }
-      
-      .demo_mixer-green {
-      	background-color: #33C735;
-        width: 146px;
-      }
-      
-      .demo_mixer-yellow {
-      	background-color: #EFC639;
-      	width: 187px;
-      }
-      
-      .demo_mixer-red {
-      	background-color: #D13B3B;
-      	width: 224px;
-      }
-			
-			#demo_mixerMain {
-				top: 33.5px;
+
+			.demo_mixer-green, .demo_mixer-yellow, .demo_mixer-red {
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
 			}
-			
-			#demo_mixerL {
-				top: 68.8px;
+
+			.demo_mixer-green {
+				background-color: #33C735;
+				width: 146px;
 			}
-			#demo_mixerR {
-				top: 71.8px;
+
+			.demo_mixer-yellow {
+				background-color: #EFC639;
+				width: 187px;
+			}
+
+			.demo_mixer-red {
+				background-color: #D13B3B;
+				width: 224px;
+			}
+
+			.demo_mixerbg .demo_mixer-green {
+				background-color: #267F26;
+				width: 146px;
+			}
+
+			.demo_mixerbg .demo_mixer-yellow {
+				background-color: #7F7F26;
+				width: 187px;
+			}
+
+			.demo_mixerbg .demo_mixer-red {
+				background-color: #7F2626;
+				width: 224px;
+			}
+
+			.demo_preview video {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+			}
+
+			#demo_header {
+				height: 24px;
+			}
+
+			.demo_title {
+				line-height: 24px;
+				color: #FFFFFF;
+				font-size: 12px;
+				left: 26px;
+				position: absolute;
+			}
+
+			#demo_nav-menu {
+				width: 100%;
+				height: 16px;
+				top: 24px;
+				position: absolute;
+			}
+
+			.demo_nav-button {
+				float: left;
+				padding: 2px 8px;
+				font-size: 12px;
+				line-height: 12px;
+				color: #E1E1E1;
+			}
+
+			.demo_mixerbg {
+				width: 224px;
+			}
+
+			.demo_mixer-section {
+				height: 4px;
+				width: 224px;
+				position: relative;
+				display: block;
+			}
+
+			.demo_mixer-text {
+				font-size: 10px;
+				line-height: 18px;
+				padding-left: 6px;
+				color: #FFFFFF;
+			}
+
+			.demo_volume-slider {
+				height: 3.5px;
+				top: 3.875px;
+				position: absolute;
+				width: 180px;
+				background-color: #2A82DA;
+			}
+
+			.demo_volume-indicator {
+				height: 6.5px;
+				top: 2.375px;
+				position: absolute;
+				width: 20px;
+				left: 160px;
+				background-color: #C2C1C2;
+			}
+
+			.demo_volume {
+				display: block;
+				position: relative;
+				height: 16px;
+				width: 224px;
+				margin-top: 6px;
+				margin-left: 7px;
+			}
+
+			.demo_volume img {
+				height: 16px;
+				width: auto !important;
+				float: right;
+				position: relative;
+				margin-left: 5px;
+			}
+
+			.demo_control-button, .demo_drop-down {
+				width: 100%;
+				background-color: #585758;
+				height: 20px;
+				font-size: 11px;
+				line-height: 20px;
+				text-align: center;
+				color: #FFFFFF;
+				border-radius: 3px;
+				margin-top: 2px;
+			}
+
+			.demo_ticker {
+				width: 100%;
+				font-size: 11px;
+				color: #FFFFFF;
+				height: 16px;
+				line-height: 16px;
+				text-align: left;
+				margin-bottom: 4px;
+				overflow: hidden;
+				position: relative;
+			}
+
+			.demo_ticker-inner {
+				width: 300px;
+				height: 20px;
+			}
+
+			.demo_ticker-inner * {
+				float: left;
+			}
+
+			.demo_drop-down {
+				background: #555455;
+				background: -moz-linear-gradient(top, #555455 1%, #464546 100%);
+				background: -webkit-linear-gradient(top, #555455 1%,#464546 100%);
+				background: linear-gradient(to bottom, #555455 1%,#464546 100%);
+				text-align: left !important;
+				padding-left: 6px;
+				margin-bottom: 4px;
+			}
+
+			.demo_ticker-num {
+				background: #1F1E1F;
+				width: 100px;
+				height: 16px;
+				margin-left: 4px;
+				padding-left: 2px;
+				float: left;
+			}
+
+			.demo_drop-selector {
+				float: right;
+				width: 21px;
+				height: 20px;
+				border-left: 1px solid #323032;
+			}
+
+			.demo_tick-selector {
+				float: right;
+				width: 17px;
+				height: 16px;
+				border-left: 1px solid #323032;
+			}
+
+			.demo_drop-selector img, .demo_tick-selector img {
+				height: 16px;
+				width: auto !important;
+				position: relative;
+				top: 2px;
+				left: 6px;
+			}
+
+			.demo_tick-selector img {
+				top: 0 !important;
+				left: 2px;
+			}
+
+			.demo_control-button:hover, .demo_control-active {
+				background-color: #7A797A !important;
+			}
+
+			#demo_section-5, #demo_section-4 {
+				padding-top: 24px;
+			}
+
+			.demo_icons-right {
+				position: relative;
+				height: 28px;
+			}
+
+			.demo_icons-right .demo_box-button {
+				float: right;
+			}
+
+			.demo_drop-down {
+				position: relative;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="demo_obs-window">
-      <div id="demo_header">
-        <img src="assets/JCRqYSv.jpg" style="display:none" />
-        <img id="demo_icon" src="assets/OBSLogo.svg" />
-        <img id="demo_obs-menu" src="assets/Header.svg" />
-        <div id="demo_buttons">
-          <div class="demo_button"></div>
-          <div class="demo_button"></div>
-          <div class="demo_button"></div>
-        </div>
-      </div>
+			<div id="demo_header">
+				<img src="assets/JCRqYSv.jpg" style="display:none" />
+				<img id="demo_icon" src="assets/OBSLogo.svg" />
+				<p class="demo_title">OBS 21.0.1 (windows) - Profile: Untitled - Scenes: Untitled</p>
+				<div id="demo_nav-menu">
+					<p class="demo_nav-button">File</p>
+					<p class="demo_nav-button">Edit</p>
+					<p class="demo_nav-button">View</p>
+					<p class="demo_nav-button">Profile</p>
+					<p class="demo_nav-button">Scene Collection</p>
+					<p class="demo_nav-button">Tools</p>
+					<p class="demo_nav-button">Help</p>
+				</div>
+				<div id="demo_buttons">
+					<div class="demo_button"></div>
+					<div class="demo_button"></div>
+					<div class="demo_button"></div>
+				</div>
+			</div>
 			<div id="demo_preview-container">
-        <div id="demo_studio-preview" class="demo_preview"></div>
-				<div id="demo_main-preview" class="demo_preview"></div>
+				<div id="demo_studio-preview" class="demo_preview">
+				</div>
+				<div id="demo_main-preview" class="demo_preview">
+					<img id="demo_one-sec" class="demo_source-active" style="width: 50%; height: 50%; top: 0; left: 0" src="assets/OneSec.png" />
+					<img id="demo_clock" style="width: 100%; height: 100%; top: -100%; left: -100%" src="assets/Clock.png" />
+				</div>
+				<div class="demo_source-border" style="display: none;" id="demo_border-main">
+					<div class="demo_border-circle" style="top: 0; left: 0;"></div>
+					<div class="demo_border-circle" style="top: 50%; left: 0;"></div>
+					<div class="demo_border-circle" style="bottom: 0; left: 0;"></div>
+					<div class="demo_border-circle" style="bottom: 0; left: 50%;"></div>
+					<div class="demo_border-circle" style="bottom: 0; right: 0;"></div>
+					<div class="demo_border-circle" style="top: 50%; right: 0;"></div>
+					<div class="demo_border-circle" style="top: 0; right: 0;"></div>
+					<div class="demo_border-circle" style="top: 0; left: 50%;"></div>
+				</div>
 			</div>
 			<div id="demo_dock-1" class="demo_border">
 				<div id="demo_section-1" class="demo_section">
 					<div class="demo_section-box">
-						<div class="demo_inner-box"></div>
-						<div class="demo_box-button"></div>
-						<div class="demo_box-button"></div>
-						<div class="demo_box-button"></div>
-						<div class="demo_box-button"></div>
+						<div class="demo_inner-box">
+							<div class="demo_box-select">Setting Up</div>
+							<div class="demo_box-select">Display 1</div>
+							<div class="demo_box-select">Display 2</div>
+							<div class="demo_box-select demo_box-selected">Game</div>
+							<div class="demo_box-select">BRB</div>
+							<div class="demo_box-select">End</div>
+						</div>
+						<div class="demo_box-button"><img src="assets/plus.png" /></div>
+						<div class="demo_box-button"><img src="assets/minus.png" /></div>
+						<div class="demo_box-button"><img src="assets/up_arrow.png" /></div>
+						<div class="demo_box-button"><img src="assets/down_arrow.png" /></div>
 					</div>
-					<img src="assets/Section1.svg" />
+					<div class="demo_gradient-box">Scenes</div>
 				</div>
 			</div>
 			<div id="demo_dock-2" class="demo_border">
 				<div id="demo_section-2" class="demo_section">
 					<div class="demo_section-box">
-						<div class="demo_inner-box"></div>
-						<div class="demo_box-button"></div>
-						<div class="demo_box-button"></div>
-						<div class="demo_box-button"></div>
-						<div class="demo_box-button"></div>
-						<div class="demo_box-button"></div>
+						<div class="demo_inner-box">
+							<div class="demo_box-select demo_box-selected">
+								<img src="assets/visible_mask.png" />
+								<img src="assets/unlocked_mask.png" />
+								<p>Overlay</p>
+							</div>
+							<div class="demo_box-select">
+								<img src="assets/visible_mask.png" />
+								<img src="assets/unlocked_mask.png" />
+								<p>Alerts</p>
+							</div>
+							<div class="demo_box-select">
+								<img src="assets/visible_mask.png" />
+								<img src="assets/unlocked_mask.png" />
+								<p>Camera</p>
+							</div>
+							<div class="demo_box-select">
+								<img src="assets/visible_mask.png" />
+								<img src="assets/unlocked_mask.png" />
+								<p>Game Capture</p>
+							</div>
+						</div>
+						<div class="demo_box-button"><img src="assets/plus.png" /></div>
+						<div class="demo_box-button"><img src="assets/minus.png" /></div>
+						<div class="demo_box-button"><img src="assets/cogwheel.png" /></div>
+						<div class="demo_box-button"><img src="assets/up_arrow.png" /></div>
+						<div class="demo_box-button"><img src="assets/down_arrow.png" /></div>
 					</div>
-					<img src="assets/Section2.svg" />
+					<div class="demo_gradient-box">Sources</div>
 				</div>
 			</div>
 			<div id="demo_dock-3" class="demo_border">
 				<div id="demo_section-3" class="demo_section">
 					<div class="demo_section-box">
+						<p class="demo_mixer-text">Microphone</p>
+						<div class="demo_mixer-section">
+							<div class="demo_mixerbar demo_mixerbg">
+								<div class="demo_mixer-red"></div>
+								<div class="demo_mixer-yellow"></div>
+								<div class="demo_mixer-green"></div>
+							</div>
+							<div class="demo_mixerbar" id="demo_mixerMain">
+								<div class="demo_mixer-red"></div>
+								<div class="demo_mixer-yellow"></div>
+								<div class="demo_mixer-green"></div>
+							</div>
+						</div>
+						<div class="demo_volume">
+							<div class="demo_volume-slider"></div>
+							<div class="demo_volume-indicator"></div>
+							<img src="assets/cogwheel.png" />
+							<img src="assets/unmute.png" />
+						</div>
+						<p class="demo_mixer-text">Desktop Audio</p>
+						<div class="demo_mixer-section">
+							<div class="demo_mixerbar demo_mixerbg">
+								<div class="demo_mixer-red"></div>
+								<div class="demo_mixer-yellow"></div>
+								<div class="demo_mixer-green"></div>
+							</div>
+							<div class="demo_mixerbar" id="demo_mixerL">
+								<div class="demo_mixer-red"></div>
+								<div class="demo_mixer-yellow"></div>
+								<div class="demo_mixer-green"></div>
+							</div>
+						</div>
+						<div class="demo_mixer-section">
+							<div class="demo_mixerbar demo_mixerbg">
+								<div class="demo_mixer-red"></div>
+								<div class="demo_mixer-yellow"></div>
+								<div class="demo_mixer-green"></div>
+							</div>
+							<div class="demo_mixerbar" id="demo_mixerR">
+								<div class="demo_mixer-red"></div>
+								<div class="demo_mixer-yellow"></div>
+								<div class="demo_mixer-green"></div>
+							</div>
+						</div>
+						<div class="demo_volume">
+							<div class="demo_volume-slider"></div>
+							<div class="demo_volume-indicator"></div>
+							<img src="assets/cogwheel.png" />
+							<img src="assets/unmute.png" />
+						</div>
 					</div>
-					<img src="assets/Section3.svg" />
-					<div class="demo_mixerbar" id="demo_mixerMain">
-            <div class="demo_mixer-red"></div>
-            <div class="demo_mixer-yellow"></div>
-            <div class="demo_mixer-green"></div>
+					<div class="demo_gradient-box">Mixer</div>
+				</div>
+			</div>
+			<div id="demo_dock-4" class="demo_border">
+				<div id="demo_section-4" class="demo_section">
+					<div class="demo_gradient-box">Scene Transitions</div>
+					<div class="demo_drop-down">Fade<div class="demo_drop-selector"><img src="assets/updown.png" /></div></div>
+					<div class="demo_icons-right">
+						<div class="demo_box-button"><img src="assets/cogwheel.png" /></div>
+						<div class="demo_box-button"><img src="assets/minus.png" /></div>
+						<div class="demo_box-button"><img src="assets/plus.png" /></div>
 					</div>
-					<div class="demo_mixerbar" id="demo_mixerL">
-						<div class="demo_mixer-red"></div>
-            <div class="demo_mixer-yellow"></div>
-            <div class="demo_mixer-green"></div>
+					<div class="demo_ticker">
+						<div class="demo_ticker-inner">
+							<p>Duration</p>
+							<div class="demo_ticker-num">300ms</div>
+						</div>
 					</div>
-					<div class="demo_mixerbar" id="demo_mixerR">
-						<div class="demo_mixer-red"></div>
-            <div class="demo_mixer-yellow"></div>
-            <div class="demo_mixer-green"></div>
-					</div>
+				</div>
+			</div>
+			<div id="demo_dock-5" class="demo_border">
+				<div id="demo_section-5" class="demo_section">
+					<div class="demo_control-button">Start Streaming</div>
+					<div class="demo_control-button">Start Recording</div>
+					<div class="demo_control-button">Studio Mode</div>
+					<div class="demo_control-button">Setting</div>
+					<div class="demo_control-button">Exit</div>
+					<div class="demo_gradient-box">Controls</div>
 				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
+		if (!Element.prototype.matches)
+		Element.prototype.matches = Element.prototype.msMatchesSelector ||
+																Element.prototype.webkitMatchesSelector;
+
+		if (!Element.prototype.closest)
+				Element.prototype.closest = function(s) {
+						var el = this;
+						if (!document.documentElement.contains(el)) return null;
+						do {
+								if (el.matches(s)) return el;
+								el = el.parentElement || el.parentNode;
+						} while (el !== null && el.nodeType === 1);
+						return null;
+				};
+
 			var sec1 = document.getElementById("demo_dock-1");
 			var sec2 = document.getElementById("demo_dock-2");
 			var sec3 = document.getElementById("demo_dock-3");
-			//var sec4 = document.getElementById("demo_dock-4");
+			var sec4 = document.getElementById("demo_dock-4");
+			var sec5 = document.getElementById("demo_dock-5");
+
 			var mixerBar = document.getElementById("demo_mixerMain");
 			var mixerBarL = document.getElementById("demo_mixerL");
 			var mixerBarR = document.getElementById("demo_mixerR");
-      var prevWindow = document.getElementById("demo_preview-container");
-			
+			var prevWindow = document.getElementById("demo_preview-container");
+
+			var borderMain = document.getElementById("demo_border-main");
+
 			var mixM = createArray(0.9, 10);
 			var mixS = createArray(0.4, 40);
 			var mixL = createArray(0, 60);
 			var mixR = createArray(0, 60);
-      
-      var animFrame = 0; // For state switching to do neat things like having a drop shadow before it starts moving, etc, and to keep track of where something is in a transition.
-      var animRunning = false;
-      
-      var curState = 0;
-      var animStates = [
-      	[
-          {
-            domElement: sec1,
-            transform: "translateX(0)",
-            style: {
-              height: ""
-            },
-            class: "demo_border"
-          },
-          {
-            domElement: sec2,
-            transform: "translateX(0)",
-            style: {
-              width: ""
-            }
-          },
-          {
-            domElement: sec3,
-            transform: "translateX(0)"
-          },
-//          {
-//            domElement: sec4,
-//            transform: "translateX(0)"
-//          },
-          {
-            domElement: prevWindow,
-            style: {
-              width: "calc(100% - 20px)"
-            }
-          }
-        ],
-        [
-          {
-            domElement: sec1,
-            transform: "translateX(250px)"
-          },
-          {
-            domElement: sec2,
-            transform: "translateX(250px)"
-          },
-          {
-            domElement: sec3,
-            transform: "translateX(-313px)"
-          },
-//          {
-//            domElement: sec4,
-//            transform: "translateX(0)"
-//          },
-        ],
-        [
-          {
-            domElement: sec1,
-            transform: "translateX(630px) translateY(-465px)",
-            style: {
-              height: "461px"
-            }
-          },
-          {
-            domElement: sec2,
-            transform: "translateX(-157px)",
-            style: {
-             	width: "250px"
-            }
-          },
-          {
-            domElement: sec3,
-            transform: "translateX(-54px)"
-          },
-          {
-            domElement: prevWindow,
-            style: {
-              width: "calc(100% - 179px)"
-            }
-          }
-        ],
-        [
-          {
-            domElement: sec1,
-            transform: "translateX(630px) translateY(-465px)",
-            style: {
-              height: "411px"
-            }
-          },
-          {
-            domElement: sec2,
-            transform: "translateX(-157px) translateY(-50px)",
-            style: {
-             	width: "250px",
-              height: "196px"
-            }
-          },
-          {
-            domElement: sec3,
-            transform: "translateX(-54px) translateY(-50px)",
-            style: {
-              height: "196px"
-            }
-          },
-          {
-            domElement: prevWindow,
-            style: {
-              width: "calc(100% - 179px)",
-              paddingTop: "calc(56.25% - 40px)"
-            }
-          }
-        ],
-        [
-          {
-            domElement: sec1,
-            transform: "translateX(610px) translateY(-425px)",
-            style: {
-              height: ""
-            },
-            class: "demo_border demo_window"
-          },
-          {
-            domElement: sec2,
-            transform: "translateX(-157px)",
-            style: {
-              height: ""
-            },
-          },
-          {
-            domElement: sec3,
-            transform: "translateX(-54px)",
-            style: {
-              height: ""
-            },
-          },
-          {
-            domElement: prevWindow,
-            style: {
-              width: "calc(100% - 20px)",
-              paddingTop: ""
-            }
-          }
-        ]
-      ]; // Transforms or classes that will need to be applied to sections to make a certain layout.
-      
-      var obswindow = document.querySelector(".demo_obs-window");
-      var obsstate = 0;
-      isWindows = navigator.appVersion.indexOf("Win")!==-1;
-      obswindow.className = "demo_obs-window" + (isWindows ? " on-windows" : "");
-			
+
+			var animFrame = 0; // For state switching to do neat things like having a drop shadow before it starts moving, etc, and to keep track of where something is in a transition.
+			var animRunning = false;
+
+			var curState = 0;
+			var animStates = [
+				[
+					{
+						domElement: sec1,
+						transform: "translateX(0)",
+						style: {
+							height: ""
+						},
+						class: "demo_border"
+					},
+					{
+						domElement: sec2,
+						transform: "translateX(0)",
+						style: {
+							width: ""
+						}
+					},
+					{
+						domElement: sec3,
+						transform: "translateX(0)"
+					},
+					{
+						domElement: sec4,
+						transform: "translateX(0)"
+					},
+					{
+						domElement: sec5,
+						transform: "translateX(0)",
+						style: {
+							width: ""
+						}
+					},
+					{
+						domElement: prevWindow,
+						style: {
+							width: "calc(100% - 20px)"
+						}
+					},
+					{
+						domElement: "#demo_one-sec",
+						class: "null",
+						style: {
+							width: "50%",
+							height: "50%",
+							top: 0,
+							left: 0
+						}
+					},
+					{
+						domElement: "#demo_clock",
+						style: {
+							top: "0",
+							left: "-100%"
+						},
+						class: "null"
+					}
+				],
+				[
+					{
+						domElement: "#demo_one-sec",
+						style: {
+							width: "50%",
+							height: "50%",
+							top: "25%",
+							left: "25%"
+						},
+						class: "demo_source-active"
+					}
+				],
+				[
+					{
+						domElement: "#demo_one-sec",
+						style: {
+							width: "70%",
+							height: "70%",
+							top: "25%",
+							left: "25%"
+						}
+					}
+				],
+				[
+					{
+						domElement: "#demo_one-sec",
+						style: {
+							width: "5%",
+							height: "5%",
+							top: "5%",
+							left: "5%"
+						}
+					}
+				],
+				[
+					{
+						domElement: "#demo_one-sec",
+						class: ""
+					},
+					{
+						domElement: "#demo_clock",
+						style: {
+							top: "0%",
+							left: "0%"
+						},
+						class: "demo_source-active"
+					}
+				],
+				[
+					{
+						domElement: sec1,
+						transform: "translateX(254px)"
+					},
+					{
+						domElement: sec2,
+						transform: "translateX(254px)"
+					},
+					{
+						domElement: sec3,
+						transform: "translateX(-286px)"
+					}
+				],
+				[
+					{
+						domElement: sec1,
+						transform: "translateX(630px) translateY(-465px)",
+						style: {
+							height: "461px",
+							width: "152px"
+						}
+					},
+					{
+						domElement: sec2,
+						transform: "translateX(-130px)",
+						style: {
+							 width: "250px"
+						}
+					},
+					{
+						domElement: sec3,
+						transform: "translateX(-27px)"
+					},
+					{
+						domElement: sec4,
+						transform: "translateX(-27px)"
+					},
+					{
+						domElement: sec5,
+						transform: "translateX(-27px)",
+						style: {
+							width: "132px"
+						}
+					},
+					{
+						domElement: prevWindow,
+						style: {
+							width: "calc(100% - 179px)"
+						}
+					}
+				],
+				[
+					{
+						domElement: sec1,
+						transform: "translateX(630px) translateY(-465px)",
+						style: {
+							height: "411px"
+						}
+					},
+					{
+						domElement: sec2,
+						transform: "translateX(-130px) translateY(-50px)",
+						style: {
+							 width: "250px",
+							height: "196px"
+						}
+					},
+					{
+						domElement: sec3,
+						transform: "translateX(-27px) translateY(-50px)",
+						style: {
+							height: "196px"
+						}
+					},
+					{
+						domElement: sec4,
+						transform: "translateX(-27px) translateY(-50px)",
+						style: {
+							height: "196px"
+						}
+					},
+					{
+						domElement: sec5,
+						transform: "translateX(-27px) translateY(-50px)",
+						style: {
+							height: "196px"
+						}
+					},
+					{
+						domElement: prevWindow,
+						style: {
+							width: "calc(100% - 179px)",
+							paddingTop: "calc(56.25% - 40px)"
+						}
+					}
+				],
+				[
+					{
+						domElement: sec1,
+						transform: "translateX(610px) translateY(-425px)",
+						style: {
+							height: "",
+							width: ""
+						},
+						class: "demo_border demo_window"
+					},
+					{
+						domElement: sec2,
+						transform: "translateX(-130px)",
+						style: {
+							height: ""
+						},
+					},
+					{
+						domElement: sec3,
+						transform: "translateX(-27px)",
+						style: {
+							height: ""
+						},
+					},
+					{
+						domElement: sec4,
+						transform: "translateX(-27px)",
+						style: {
+							height: ""
+						}
+					},
+					{
+						domElement: sec5,
+						transform: "translateX(-27px)",
+						style: {
+							height: ""
+						}
+					},
+					{
+						domElement: prevWindow,
+						style: {
+							width: "calc(100% - 20px)",
+							paddingTop: ""
+						}
+					}
+				]
+			]; // Transforms or classes that will need to be applied to sections to make a certain layout.
+
+			var obswindow = document.querySelector(".demo_obs-window");
+			var obsstate = 0;
+			var isWindows = navigator.userAgent.indexOf("Win")!==-1;
+			obswindow.className = "demo_obs-window" + (isWindows ? " on-windows" : "");
+
 			function drawUpdate() {
 				mixerBar.style.width = Math.sqrt(updateArray(mixM, 0.1, 1)) * 100 + "%";
 				let base = Math.sqrt(updateArray(mixS, 0, 0.4));
 				mixerBarL.style.width = Math.max(Math.min(base + updateArray(mixL, -0.2, 0.2), 1), 0) * 100 + "%";
 				mixerBarR.style.width = Math.max(Math.min(base + updateArray(mixR, -0.2, 0.2), 1), 0) * 100 + "%";
 				if(animRunning) {
-        	if(animFrame == 0) {
-          	curState = (curState + 1) % animStates.length;
-            for(let i = 0, l = animStates[curState].length; i < l; ++i) {
-              animStates[curState][i].domElement.style.boxShadow = "0 0 5px rgba(0,0,0,0.6)";
-            }
-          } else if(animFrame == 5) {
-            if(curState == 0) {
-              obsstate = (obsstate + 1) % 3;
-              obswindow.className = "demo_obs-window"
-                + (obsstate > 0 ? " studio-mode" : "")
-                + (obsstate > 1 ? " vertical" : "")
-              	+ (isWindows ? " on-windows" : "");
-            }
-            for(let i = 0, l = animStates[curState].length; i < l; ++i) {
-              let anim = animStates[curState][i];
-              let el = anim.domElement;
-              if(anim.transform) {
-              	el.style.transform = anim.transform;
-              }
-              if(anim.style) {
-                let keys = Object.keys(anim.style);
-               	for(let x = 0, m = keys.length; x < m; ++x) {
-                  el.style[keys[x]] = anim.style[keys[x]];
-                }
-              }
-              if(anim.class) {
-                el.className = anim.class;
-              }
-            }
-          } else if(animFrame == 30) {
-            for(let i = 0, l = animStates[curState].length; i < l; ++i) {
-              animStates[curState][i].domElement.style.boxShadow = "";
-            }
-            animRunning = false;
-          }
-        	++animFrame;
-        }
-        window.setTimeout(function() {
-      		window.requestAnimationFrame(drawUpdate);
-      	}, 32);
+					animRunning = false;
+					curState = (++curState >= animStates.length ? 0 : curState);
+					if(curState == 0) {
+						obsstate = (obsstate + 1) % 3;
+						obswindow.className = "demo_obs-window"
+							+ (obsstate > 0 ? " studio-mode" : "")
+							+ (obsstate > 1 ? " vertical" : "")
+							+ (isWindows ? " on-windows" : "");
+					}
+					for(let i = 0, l = animStates[curState].length; i < l; ++i) {
+						let anim = animStates[curState][i];
+						let el = (typeof anim.domElement == "object" ? anim.domElement
+							: document.querySelector(anim.domElement));
+						if(anim.transform) {
+							el.style.transform = anim.transform;
+							el.style.msTransform = anim.transform;
+						}
+						if(anim.style) {
+							let keys = Object.keys(anim.style);
+							 for(let x = 0, m = keys.length; x < m; ++x) {
+								el.style[keys[x]] = anim.style[keys[x]];
+							}
+						}
+						if(anim.class) {
+							el.className = anim.class;
+						}
+					}
+				}
+				let activeSources = document.querySelectorAll(".demo_source-active");
+				if(activeSources.length > 0) {
+					borderMain.style.display = "block";
+					let active = window.getComputedStyle(activeSources[activeSources.length - 1]);
+					let preview = window.getComputedStyle(activeSources[activeSources.length - 1].closest(".demo_preview"));
+					let previewTransform = (preview.transform ? preview.transform : preview.msTransform);
+					let transforms = previewTransform.match(/[+-]?([0-9]*[.])?[0-9]+/g);
+					//borderMain.style.left = parseFloat(active.left) + parseFloat(preview.left) + parseFloat(transforms[4]) / parseFloat(transforms[0]) + "px";
+					//borderMain.style.top = parseFloat(active.top)  + parseFloat(preview.top) + parseFloat(transforms[5]) * parseFloat(transforms[0]) + "px";
+					//borderMain.style.width = parseFloat(active.width) * parseFloat(transforms[0]) + "px";
+					//borderMain.style.height = parseFloat(active.height) * parseFloat(transforms[3]) + "px";
+
+					let leftOffset = ((parseFloat(active.left) - (parseFloat(preview.width)/2)) * parseFloat(transforms[0])) + (parseFloat(preview.width)/2) + parseFloat(transforms[4]);
+					let topOffset = ((parseFloat(active.top) - (parseFloat(preview.height)/2)) * parseFloat(transforms[0])) + (parseFloat(preview.height)/2) + parseFloat(transforms[5]);
+
+					borderMain.style.cssText = "border: " + borderMain.style.border
+						+ "; left: " + (parseFloat(preview.left) + leftOffset + "px")// + parseFloat(transforms[4]) / parseFloat(transforms[0]) + "px")
+						+ "; top: " + (parseFloat(preview.top) + topOffset + "px")
+						+ "; width: " + (parseFloat(active.width) * parseFloat(transforms[0]) + "px")
+						+ "; height: " + (parseFloat(active.height) * parseFloat(transforms[3]) + "px");
+				} else {
+					borderMain.style.display = "none";
+				}
+				window.requestAnimationFrame(drawUpdate);
 			}
-			
+
 			function updateArray(array, min, max) {
 				array.shift();
 				array.push(Math.random()*(max-min)+min);
@@ -619,20 +1192,20 @@
 				}
 				return average;
 			}
-			
+
 			function createArray(val, len) {
 				let array = [];
 				for(let i = 0; i < len; ++i) { array.push(val); }
 				return array;
 			}
-			
-      window.requestAnimationFrame(drawUpdate);
-      
-      
-      $('#demo_preview-container').on('click', function(e) {
-        animRunning = true;
-        animFrame = 0;
-      });
+
+			window.requestAnimationFrame(drawUpdate);
+
+
+			$('#demo_preview-container').on('click', function(e) {
+				animRunning = true;
+				animFrame = 0;
+			});
 
 		</script>
 	</body>
